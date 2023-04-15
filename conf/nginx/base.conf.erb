@@ -79,6 +79,9 @@ http {
     include /app/<%= f %>;
     <% end %>
 
+    <% if ENV['HAS_SERVER_CONF'] %>
+      include servers.conf;
+    <% else %>
     server {
         server_name localhost;
         listen <%= ENV['PORT'] %>;
@@ -90,18 +93,11 @@ http {
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;
 
-        # Default configuration for non-framework apps
-        root /app/<%= ENV['DOCUMENT_ROOT'] %>;
-
-        location ~ \.php {
-            include fastcgi_params;
-            fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-            fastcgi_pass php;
-            fastcgi_buffers 256 4k;
-        }
+        include site.conf;
 
         <% Shellwords.split(ENV['NGINX_INCLUDES'].to_s).each do |f| %>
         include /app/<%= f %>;
         <% end %>
     }
+    <% end %>
 }
