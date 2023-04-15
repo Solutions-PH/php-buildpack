@@ -514,7 +514,10 @@ fi
 
 [ -f \$basedir/servers.conf.erb ] && export HAS_SERVER_CONF=true
 
+`servers.conf`
+
 if [ -f \$basedir/servers.conf.erb ] ; then
+  `file exists servers.conf`
   erb "\$basedir/servers.conf.erb" > "\$basedir/vendor/nginx/conf/servers.conf"
 fi
 
