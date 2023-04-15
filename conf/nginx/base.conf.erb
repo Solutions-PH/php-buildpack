@@ -79,6 +79,9 @@ http {
     include /app/<%= f %>;
     <% end %>
 
+    <% if ENV['HAS_SERVER_CONF'] %>
+      include servers.conf;
+    <% else %>
     server {
         server_name localhost;
         listen <%= ENV['PORT'] %>;
@@ -96,4 +99,5 @@ http {
         include /app/<%= f %>;
         <% end %>
     }
+    <% end %>
 }
