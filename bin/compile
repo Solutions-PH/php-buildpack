@@ -512,14 +512,9 @@ else
     echo "Using WEB_CONCURRENCY=\${WEB_CONCURRENCY} processes." >&2
 fi
 
-[ -f \$basedir/servers.conf.erb ] && export HAS_SERVER_CONF=true
+cp "$basedir/servers.conf.erb" "conf/servers.conf.erb"
 
-`servers.conf`
-
-if [ -f \$basedir/servers.conf.erb ] ; then
-  `file exists servers.conf`
-  erb "\$basedir/servers.conf.erb" > "\$basedir/vendor/nginx/conf/servers.conf"
-fi
+erb conf/servers.conf.erb > /app/vendor/nginx/conf/servers.conf
 
 `init_log_plex ${LOG_FILES}`
 `tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
