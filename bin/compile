@@ -512,6 +512,12 @@ else
     echo "Using WEB_CONCURRENCY=\${WEB_CONCURRENCY} processes." >&2
 fi
 
+[ -f \$basedir/servers.conf.erb ] && export HAS_SERVER_CONF=true
+
+if [ -f \$basedir/servers.conf.erb ] ; then
+  erb "\$basedir/servers.conf.erb" > "\$basedir/vendor/nginx/conf/servers.conf"
+fi
+
 `init_log_plex ${LOG_FILES}`
 `tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
 
