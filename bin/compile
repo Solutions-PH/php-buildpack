@@ -512,16 +512,16 @@ else
     echo "Using WEB_CONCURRENCY=\${WEB_CONCURRENCY} processes." >&2
 fi
 
-echo "copy servers.conf.erb"
+echo "copy servers.conf.erb" >&2
 
 cp "$basedir/servers.conf.erb" "conf/servers.conf.erb"
 cp "$basedir/../servers.conf.erb" "conf/nginx.conf.erb"
 
-echo "copy servers.conf.erb"
+echo "copy servers.conf.erb" >&2
 
 erb conf/servers.conf.erb > /app/vendor/nginx/conf/servers.conf
 
-echo "copy servers.conf.erb"
+echo "copy servers.conf.erb" >&2
 
 `init_log_plex ${LOG_FILES}`
 `tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
